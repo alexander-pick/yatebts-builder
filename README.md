@@ -61,7 +61,9 @@ Move the phone away from the SDR antennas, use better USB cables.
 
 # Contact Info
 
-You can contact me via twitter at `@alexander_pick` or at mostodon via `@alxhh@infosec.exchange` if you are interested to chat about the project. Please fill bug reports and feature requests here at github. Valeuable pull requests are welcome if they match the license.
+You can contact me via twitter at `@alexander_pick` or at mastodon via `@alxhh@infosec.exchange` if you are interested to chat about the project or basebands in general. 
+
+Please fill bug reports and feature requests here at github. Valeuable pull requests are welcome if they match the license.
 
 Software is provided as-is, without any warranty and under MIT License.
 
