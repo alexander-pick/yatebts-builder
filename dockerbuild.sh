@@ -14,6 +14,6 @@ docker run --privileged \
     -v /dev:/dev \
     -v $(pwd)/src/:/usr/src/ \
     --net=bridge \
- #   -p 4729:4729/udp \
-    -p 80:80/tcp \                      # change TCP port for Apache here
-    -it --name yate yate-image bash 
+    -p 80:80/tcp \
+    -it --name yate yate-image bash
+
