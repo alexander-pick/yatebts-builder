@@ -1,5 +1,5 @@
 #!/bin/bash
-# API 2022 
+# Alexander Pick 2022-2023
 # Mail: contact@alexander-pick.com
 
 SECONDS=0
@@ -112,10 +112,10 @@ function download_src {
     eval "git clone https://github.com/Nuand/bladeRF.git > ${WRITELOG} 2>&1"
 
     echo -e "${BLUE}[i] downloading yate${NC}"
-    eval "svn checkout http://voip.null.ro/svn/yate/trunk yate >> ${WRITELOG} 2>&1"
+    eval "git clone https://github.com/yatevoip/yate.git >> ${WRITELOG} 2>&1"
 
     echo -e "${BLUE}[i] downloading yatebts${NC}"
-    eval "svn checkout http://voip.null.ro/svn/yatebts/trunk yatebts >> ${WRITELOG} 2>&1"
+    eval "git clone https://github.com/yatevoip/yatebts.git >> ${WRITELOG} 2>&1"
     cd /usr/src
 
     #fix permissions if we run in docker

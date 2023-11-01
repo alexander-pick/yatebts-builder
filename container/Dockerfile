@@ -4,7 +4,7 @@ ENV NO_ARCH_OPT 1
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get -y install --no-install-suggests \
-    build-essential libgsm1-dev libusb-1.0-0-dev autoconf subversion \
+    build-essential libgsm1-dev libusb-1.0-0-dev autoconf \
     wget nano apache2 php7.2 libbladerf-dev automake bladerf cmake \
     git doxygen kdoctools bash net-tools tcpdump\
     && \
