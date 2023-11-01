@@ -17,6 +17,6 @@ docker run --privileged \
     -v /dev:/dev \
     -v $(pwd)/src/:/usr/src/ \
     --net=bridge \
-    -p 80:80/tcp \
+    -p 8080:80/tcp \
     -it --name yate yate-image bash
 

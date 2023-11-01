@@ -51,6 +51,10 @@ function build_yatebts {
     echo -e "${BLUE}[i] build target: ${YELLOW}yatebts${NC}"
 
     WRITELOG="${LOGS}/${DATETIME}.yatebts.log"
+
+    mkdir -p /usr/local/share/yate/nipc_web/
+    cd /usr/local/share/yate/nipc_web/
+    eval "git clone https://github.com/yatevoip/ansql.git >> ${WRITELOG} 2>&1"
     
     cd /usr/src/yatebts
 
@@ -102,6 +106,7 @@ function download_src {
     # backup and clean existing srcs
     if [ -d "/usr/src/yatebts" ]; then
         clean_src
+        mkdir -p ${LOGS}
     fi
 
     echo -e "${BLUE}[i] downloading bladerf components${NC}"
@@ -127,18 +132,28 @@ function download_src {
 
 }
 
-function backup_src {
+function backup_dir {
+
+    BDIR=${1}
 
     WRITELOG="${LOGS}/${DATETIME}.backup.log"
+
+    if [ -d "./${BDIR}" ]; then
+        eval "tar cvzf ${BACKUPS}${DATETIME}${BDIR}.tgz ./${BDIR} >> ${WRITELOG}"
+    fi
+}
+
+function backup_src {
 
     cd /usr/src
     echo -e "${BLUE}[i] creating backups${NC}"
     eval "mkdir ${BACKUPS} ${NOOUT}"
-    eval "tar cvzf ${BACKUPS}${DATETIME}_yate.tgz ./yate > ${WRITELOG}"
-    eval "tar cvzf ${BACKUPS}${DATETIME}_yatebts.tgz ./yatebts >> ${WRITELOG}"
-    eval "tar cvzf ${BACKUPS}${DATETIME}_bladerf.tgz ./bladeRF >> ${WRITELOG}"
-    eval "tar cvzf ${BACKUPS}${DATETIME}__work.tgz ./__work >> ${WRITELOG}"
+    backup_dir "yate"
+    backup_dir "yatebts"
+    backup_dir "bladerf"
+    backup_dir "__work"
 }
+
 
 function clean_src {
 
@@ -156,11 +171,16 @@ function clean_src {
 
 function setup_web {
 
+    WRITELOG="${LOGS}/${DATETIME}.web.log"
+
     echo -e "${BLUE}[i] setting up webpanel${NC}"
     eval "ln -s /usr/local/share/yate/nipc_web/ /var/www/html/nipc ${NOOUT}"
+
     eval "chmod -R a+rw /usr/local/etc/yate ${NOOUT}"
-    eval "apachectl restart ${NOOUT}"
-    echo -e "${BLUE}[i] please check http://localhost/nipc/ for the webpanel"
+    
+    eval "apachectl restart >> ${WRITELOG} 2>&1"
+
+    echo -e "${BLUE}[i] please check http://localhost:8080/nipc/ for the webpanel"
 
 }
 

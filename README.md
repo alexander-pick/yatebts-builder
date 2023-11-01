@@ -41,7 +41,7 @@ If you want to look at the help, use `--help`. There are some advanced options f
 
 # YateBTS Settings
 
-YateBTS comes with a web panel which can be accessed at `http://localhost/nipc/`. Apache will inside docker will run at port 80 by default. If your port 80 is already in used adjust the port in `dockerbuild.sh`. Reconfigure the dockerfile if you want to use another port at localhost.
+YateBTS comes with a web panel which can be accessed at `http://localhost:8080/nipc/`. Apache will inside docker will run at port 8080 by default. If your port 8080 is already in used adjust the port in `dockerbuild.sh`. Reconfigure the dockerfile if you want to use another port at localhost.
 
 # Troubleshooting
 
