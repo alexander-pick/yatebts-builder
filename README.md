@@ -1,57 +1,76 @@
-# YateBTS builder
+# Local BTS builder (GSM / LTE / 5G)
 
-This project is a build environment for YateBTS. It will pull all sources from the SVN and will build Yate, YateBTS and bladeRF firmware inside a handy docker container. A dockerfile and a script for creating the docker container are included as well. The docker container is configured to allow the use of a SDR connected to the host system and will run the YateBTS webconfig on localhost:80 for convenient use. So it's pretty much a plug and play YateBTS setup for anyone who doesn't want to spend time on getting it going manually. The setup is still suitable for development purpose using the included `build_yate.sh` script to recompile individual components. Fully customize able for advanced users. 
+This project is a build environment for a local BTS setup. It will pull all sources and will build Yate, YateBTS, srsRAN 4G, srsProject and a suiteable bladeRF firmware inside a handy docker container and build them for you - ready to go. The setup can be used for testing or development purpose.
 
-System was tested with a bladeRF x40 and A4 SDRs. The source tags pulled are the one recommended in the YateBTS setup guide.
+The docker container is configured to allow the use of a SDR connected to the host system and will run the YateBTS webconfig on http://localhost:8080 for convenient use. So it's pretty much a plug and play bts setup for anyone who doesn't want to spend time on building it manually. The setup is furthermore suitable for development purpose using the included `build_bts.sh` script to recompile individual components. Use `--quick` for fast rebuilds after smaller changes, it will ommit the clean and reconfigure step. 
 
-This is a small project I build after taking the amazing baseband security training by Marius Münch and Fabian Freyer at hardwear.io, which took place in The Hauge this year. If you are interested in baseband research I really recommend you their trainings as a kickstart.
-
-*YateBTS builder is the first part of multiple releases aimed to aid baseband research and will be the foundation for the other tools. So stay tuned!*
+System was tested with a bladeRF x40 and A4 SDRs. The source tags pulled are the one recommended in the YateBTS setup guide. This build enviornment evolved over time and LTE + 5G were added using srsRAN.
 
 # Basic Operation
 
 - use `dockerbuild.sh` to build container
-- once the container is up use `build_yate.sh --all` to build yatebts and bladeRF with all components.
-- use `run_yate.sh` to run yate
+- once the container is up use `build_bts.sh --all` to build the full stack with all components.
+
+More options:
+
+- use `run_yate.sh` to run `yateBTS`
+- use `run_srs.sh` to run `srsRAN 4G` or `srsRAN Project` (5G)
+- use `flash_bladerf.sh` to flash your bladeRF to the required version
 
 If you want to look at the help, use `--help`. There are some advanced options for the scripts:
 
-## build_yate.sh Parameter
+## build_bts.sh Parameter
 
-> 		Possible parameter1:
->         --help          display this help
->         --all           cleans, downloads and build all components - yate, yatebts and bladerf (recommended for a first run)
->         --download      downloads the required sources
->         --rebuild-yate  rebuilds yate
->         --rebuild-yatebts       rebuilds yatebts
->         --rebuild-core  rebuilds yate and yatebts
->         --rebuild-bladerf       rebuilds bladerf
->         --web           redo the web setup (port 80 webpanel)
->         --clean         clean all external sources (WARNING: deletes all currently present sources!)
-> 		Possible parameter2:
->         --quick         quick build, without configure or clean
+> 		Possible parameter 1:
+>         --help                display this help
+>         --all                 cleans, downloads and build all components - yate, yatebts and bladerf (recommended for a first run)
+>         --download            downloads the required sources
+>         --rebuild-yate        rebuilds yate
+>         --rebuild-yatebts     rebuilds yatebts
+>         --rebuild-core        rebuilds yate and yatebts
+>         --rebuild-bladerf     rebuilds bladerf
+>         --web                 redo the web setup (port 80 webpanel)
+>         --clean               clean all external sources (WARNING: deletes all currently present sources!)
+> 		Possible parameter 2:
+>         --quick               quick re-build, without configure or clean
 
 ## run_yate.sh Parameter
 
 >        --help   display this help
 >        --pcap   capture a pcap of the GSM traffic via GSMtap*
->        --x40    flash bladeRF x40 before starting
->        --a4     flash bladeRF A4 before starting
 >        * requrires GSMTAP to be enabled (in webpanel)
+
+## run_srs.sh Parameter
+
+>        --help   display this help
+
+## flash_bladerf.sh Parameter
+
+>        --help   display this help
+         --a4     flash bladeRF A4
+         --x40    flash bladeRF x40
 
 # YateBTS Settings
 
 YateBTS comes with a web panel which can be accessed at `http://localhost:8080/nipc/`. Apache will inside docker will run at port 8080 by default. If your port 8080 is already in used adjust the port in `dockerbuild.sh`. Reconfigure the dockerfile if you want to use another port at localhost.
 
+# srsRAN Settings
+
+Please edit the config files located at:
+```
+~/.config/srslte/enb.conf
+~/.config/srslte/epc.conf
+```
+
 # Troubleshooting
 
-Here are some solutions for problems I encountered during my journey with YateBTS:
+Here are some solutions for problems I encountered during my journey:
 
 **Ahead of time errors**
-Restart Docker. These errors are sometimes combined with some IOCTL errors which are hard to spot and happen after Yate crashed once.
+Restart Docker. These errors are sometimes combined with some IOCTL errors which are hard to spot and happen after yateBTS crashed once.
 
-**Port 80 already in use**
-If port 80 is in use on your host adjust the port in dockerbuild.sh
+**Port 8080 already in use**
+If port 8080 is in use on your host adjust the port in `dockerbuild.sh`
 
 **Weird burst error**
 Move the phone away from the SDR antennas, check for timing issues on the host.
@@ -59,9 +78,11 @@ Move the phone away from the SDR antennas, check for timing issues on the host.
 **ADB disconnecting inside cage**
 Move the phone away from the SDR antennas, use better USB cables.
 
-# Contact Info
+# Motivation
 
-You can contact me via twitter at `@alexander_pick` or at mastodon via `@alxhh@infosec.exchange` if you are interested to chat about the project or basebands in general. 
+This is a small project I build after attending the amazing baseband security training by Marius Münch and Fabian Freyer at (hardwear.io 2022)[https://hardwear.io/usa-2022/training/reverse-engineering-emulation-dynamic-testing-cellular-baseband-firmware.php]. If you are interested in baseband research I really recommend you their trainings as a kickstart.
+
+# Contact Info
 
 Please fill bug reports and feature requests here at github. Valeuable pull requests are welcome if they match the license.
 

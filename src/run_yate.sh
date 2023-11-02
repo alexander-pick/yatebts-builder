@@ -1,5 +1,5 @@
 #!/bin/bash
-# API 2022 
+# Alexander Pick 2022-2023
 # Mail: contact@alexander-pick.com
 
 BLUE="\e[94m"
@@ -22,11 +22,9 @@ trap cleanup EXIT
 
 function usage {
                                                              
-    echo -e "\nUsage: ${0##*/} <parameter1>\nPossible parameter:"
+    echo -e "\nUsage: ${0##*/}\nPossible parameter:"
     echo -e "\t--help\t display this help"
     echo -e "\t--pcap\t capture a pcap of the GSM traffic via GSMtap*"
-    echo -e "\t--x40\t flash bladeRF x40 before starting"
-    echo -e "\t--a4\t flash bladeRF A4 before starting"
     echo -e "\t* requrires GSMTAP to be enabled (in webpanel)\n"
 }
 
@@ -44,16 +42,6 @@ elif [ "${1}" == "--pcap" ]; then
     echo -e "${BLUE}[i] starting tcpdump in background${NC}"
     eval "tcpdump -i any udp port 4729 -w ${CAPTURES}GSMTAP-${DATETIME}.pcap & ${NOOUT}"
     start_yate
-
-elif [ "${1}" == "--x40" ]; then
-
-    echo -e "${BLUE}[i] flashing bladeRF (x40)${NC}"
-    bladeRF-cli -L /usr/local/share/yate/data/hostedx40.rbf
-
-elif [ "${1}" == "--a4" ]; then
-
-    echo -e "${BLUE}[i] flashing bladeRF (A4)${NC}"
-    bladeRF-cli -L /usr/local/share/yate/data/hostedxA4.rbf
 
 else 
 

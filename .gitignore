@@ -1,5 +1,3 @@
-src/bladeRF
-src/yate
-src/yatebts
 src/logs
 src/backups
+src/python3.10
