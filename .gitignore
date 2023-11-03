@@ -1,8 +1,4 @@
 src/logs
 src/backups
 src/python3.10
-src/yate
-src/yatebts
-src/srsGUI
-src/srsRAN_4G
-src/srsRAN_Project
+src/bladeRF_fw/*.img

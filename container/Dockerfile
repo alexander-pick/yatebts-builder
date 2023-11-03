@@ -5,7 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get -y install --no-install-suggests \
     build-essential libgsm1-dev libusb-1.0-0-dev autoconf \
-    wget nano apache2 libbladerf-dev automake bladerf cmake php libapache2-mod-php \
+    wget nano apache2 libbladerf-dev automake bladerf cmake php libapache2-mod-php iptables \
     git doxygen bash net-tools tcpdump iproute2 telnet libqt5multimediawidgets5 libqt5multimedia5-plugins \
     libboost-system-dev libboost-test-dev libboost-thread-dev libqwt-qt5-dev qtbase5-dev qtmultimedia5-dev \
     cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev \

@@ -24,15 +24,18 @@ function usage {
 }
 
 function start_srs {
+
     echo -e "${BLUE}[i] starting srs stack${NC}"
     echo 1 > /proc/sys/net/ipv4/ip_forward
 
-    srsepc
-    srsenb
+    /usr/local/bin/srsepc
+    /usr/local/bin/srsenb
 
     iptables -t nat -A POSTROUTING -o ${ETH} -j MASQUERADE
     iptables -A FORWARD -i ${ETH} -o srs_spgw_sgi -m state --state RELATED,ESTABLISHED -j ACCEPT
     iptables -A FORWARD -i srs_spgw_sgi -o ${ETH} -j ACCEPT
+
+
 }
 
 if [ "${1}" == "--help" ]; then

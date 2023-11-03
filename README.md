@@ -11,6 +11,8 @@ System was tested with a bladeRF x40 and A4 SDRs. The source tags pulled are the
 - use `dockerbuild.sh` to build container
 - once the container is up use `build_bts.sh --all` to build the full stack with all components.
 
+Binaries are located in `/usr/local/bin/` after successful building.
+
 More options:
 
 - use `run_yate.sh` to run `yateBTS`
@@ -56,11 +58,7 @@ YateBTS comes with a web panel which can be accessed at `http://localhost:8080/n
 
 # srsRAN Settings
 
-Please edit the config files located at:
-```
-~/.config/srslte/enb.conf
-~/.config/srslte/epc.conf
-```
+Please edit the config files located at `/etc/srsran/`.
 
 # Troubleshooting
 

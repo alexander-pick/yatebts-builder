@@ -5,11 +5,13 @@
 BLUE="\e[94m"
 NC="\e[0m"
 
-function usage {                                         
+function usage {          
+                                   
     echo -e "\nUsage: ${0##*/} <parameter1>\nPossible parameter:"
     echo -e "\t--help\t display this help"
     echo -e "\t--x40\t flash bladeRF x40"
     echo -e "\t--a4\t flash bladeRF A4"
+
 }
 
 function get_firmware {
@@ -41,7 +43,7 @@ if [ -f ${BRFCLI} ]; then
 
         echo -e "${BLUE}[i] updating firmware (x40)${NC}"
 
-        bladeRF-cli -f bladeRF_fw_v1.8.0.img
+        ${BRFCLI} -f bladeRF_fw_v1.8.0.img
 
         sleep 5
 
@@ -55,7 +57,7 @@ if [ -f ${BRFCLI} ]; then
 
         echo -e "${BLUE}[i] updating firmware ${NC}"
 
-        bladeRF-cli -f bladeRF_fw_v1.8.0.img
+        ${BRFCLI} -f bladeRF_fw_v1.8.0.img
 
         sleep 5
 
