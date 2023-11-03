@@ -2,6 +2,11 @@
 # Alexander Pick 2022-2023
 # Mail: contact@alexander-pick.com
 
+# init and update submodules
+git submodule update --init --recursive
+git pull --recurse-submodules --jobs=10
+
+# clean old stuff
 docker stop bts-local
 docker rm bts-local
 docker image rm bts-local-image

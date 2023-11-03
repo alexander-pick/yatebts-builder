@@ -211,6 +211,9 @@ function download_src {
     WRITELOG="${LOGS}/${DATETIME}.download.log"
 
     cd /usr/src
+
+    git submodule update --init --recursive
+
     eval "git clone https://github.com/Nuand/bladeRF.git > ${WRITELOG} 2>&1"
 
     echo -e "${BLUE}[i] downloading yate${NC}"
