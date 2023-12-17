@@ -13,6 +13,8 @@ RUN apt-get update && \
     && \
     echo 'export PS1="[bts]$PS1"' >> ~/.bashrc
 
+RUN apachectl start
+
 ENV TERM xterm
 
 # gsmtap, doesn't work proper use 
@@ -24,6 +26,6 @@ EXPOSE 80/tcp
 
 ENV IS_DOCKER="1"
 
-WORKDIR /usr/src/
+WORKDIR /usr/src
 
 ENTRYPOINT /bin/bash

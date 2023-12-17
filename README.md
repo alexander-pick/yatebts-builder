@@ -18,6 +18,7 @@ Also make sure that the user executing `dockerbuild.sh` is in the `docker` group
 
 ```sh
 sudo usermod -aG docker <USERNAME>
+newgrp docker
 ```
 
 # Basic Operation
