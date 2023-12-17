@@ -1,0 +1,18 @@
+[submodule "bladeRF"] 
+  path = src/bladeRF 
+  url = https://github.com/Nuand/bladeRF.git
+[submodule "srsGUI"] 
+  path = src/srsGUI 
+  url = https://github.com/srsran/srsGUI.git
+[submodule "srsRAN_4G"] 
+  path = src/srsRAN_4G 
+  url = https://github.com/srsran/srsRAN_4G.git
+[submodule "srsRAN_Project"] 
+  path = src/srsRAN_Project 
+  url = https://github.com/srsran/srsRAN_Project.git
+[submodule "yate"] 
+  path = src/yate 
+  url = https://github.com/yatevoip/yate.git
+[submodule "yatebts"] 
+  path = src/yatebts 
+  url = https://github.com/yatevoip/yatebts.git
