@@ -6,6 +6,20 @@ The docker container is configured to allow the use of a SDR connected to the ho
 
 System was tested with a bladeRF x40 and A4 SDRs. The source tags pulled are the one recommended in the YateBTS setup guide. This build enviornment evolved over time and LTE + 5G were added using srsRAN.
 
+# Debian Prerequisite
+
+```sh
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg2 software-properties-common containerd runc
+sudo apt install docker docker.io
+```
+
+Also make sure that the user executing `dockerbuild.sh` is in the `docker` group:
+
+```sh
+sudo usermod -aG docker <USERNAME>
+```
+
 # Basic Operation
 
 - use `dockerbuild.sh` to build container
