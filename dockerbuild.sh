@@ -19,6 +19,7 @@ docker build -t bts-local-image ./container/
 # an enviorment dealing with hardware
 docker run --privileged \
     -v /dev:/dev \
+    -v /run/pcscd/pcscd.comm:/run/pcscd/pcscd.comm \
     -v $(pwd)/src/:/usr/src/ \
     --net=bridge \
     -p 8080:80/tcp \

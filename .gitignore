@@ -2,3 +2,5 @@ src/logs
 src/backups
 src/python3.10
 src/bladeRF_fw/*.img
+start.sh
+src/capture

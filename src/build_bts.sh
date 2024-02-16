@@ -14,7 +14,7 @@ NC="\e[0m"
 LOGS="/usr/src/logs/"
 BACKUPS="/usr/src/backups/"
 
-NOOUT="> /dev/null 2>&1"
+NOOUT=" 1> /dev/null"
 DATETIME=$(date -d "today" +"%Y%m%d%H%M%S")
 
 PARAM2=${2}
@@ -189,7 +189,7 @@ function build_srsran_project {
         eval "rm -fr build >> ${WRITELOG}"
         eval "mkdir build >> ${WRITELOG}"
         cd build
-        eval "cmake .. >> ${WRITELOG}"
+        eval "cmake .. -DENABLE_EXPORT=ON -DENABLE_ZEROMQ=ON >> ${WRITELOG}"
     fi
     eval "make -j$(nproc) >> ${WRITELOG}"
     eval "make install >> ${WRITELOG}"
@@ -198,6 +198,25 @@ function build_srsran_project {
 
 }
 
+function build_soapy {
+
+    echo -e "${BLUE}[i] build target: ${YELLOW}SoapyBladeRF${NC}"
+
+    WRITELOG="${LOGS}/${DATETIME}.soapy.log"
+
+    cd  SoapyBladeRF
+    rm -fr build
+    mkdir build
+    cd build
+    eval "cmake .. >> ${WRITELOG}"
+    eval "make >> ${WRITELOG}"
+    eval "make install >> ${WRITELOG}"
+
+    cd /usr/src
+
+}
+
+# shouldn't be used, got submodules now?
 function download_src {
 
     # backup and clean existing srcs
@@ -212,9 +231,13 @@ function download_src {
 
     cd /usr/src
 
-    git submodule update --init --recursive
+    #git submodule update --init --recursive
 
     eval "git clone https://github.com/Nuand/bladeRF.git > ${WRITELOG} 2>&1"
+
+    #soapy 
+    echo -e "${BLUE}[i] downloading soapy${NC}"
+    eval "git clone https://github.com/pothosware/SoapyBladeRF.git >> ${WRITELOG} 2>&1"
 
     echo -e "${BLUE}[i] downloading yate${NC}"
     eval "git clone https://github.com/yatevoip/yate.git >> ${WRITELOG} 2>&1"
@@ -255,6 +278,7 @@ function backup_src {
     backup_dir "yate"
     backup_dir "yatebts"
     backup_dir "bladerf"
+    backup_dir "SoapyBladeRF"
     backup_dir "srsGUI"
     backup_dir "srsRAN_4G"
     backup_dir "srsRAN_Project"
@@ -268,6 +292,7 @@ function clean_src {
     echo -e "${BLUE}[i] cleaning...${NC}"
     eval "rm -fr logs ${NOOUT}"
     eval "rm -fr bladeRF ${NOOUT}"
+    eval "rm -fr SoapyBladeRF ${NOOUT}"
     eval "rm -fr yate ${NOOUT}"
     eval "rm -fr yatebts ${NOOUT}"
     eval "rm -fr srsGUI ${NOOUT}"
@@ -311,7 +336,7 @@ function usage {
     echo -e "Usage: ${0##*/} <parameter1> <parameter2>\nPossible parameter1:"
     echo -e "\t--help\t\tdisplay this help"
     echo -e "\t--all\t\tcleans, downloads and build all components - yate, yatebts, srsGUI, srsRAN 4G, srsRAN Project and bladerf firmware (recommended for a first run)"
-    echo -e "\t--download\tdownloads the required sources only"
+#    echo -e "\t--download\tdownloads the required sources only"
     echo -e "\t--rebuild-yate\trebuilds yate"
     echo -e "\t--rebuild-yatebts\trebuilds yatebts"
     echo -e "\t--rebuild-srsgui\trebuilds srsGUI"
@@ -319,6 +344,7 @@ function usage {
     echo -e "\t--rebuild-srs5g\trebuilds srsRAN Project"
     echo -e "\t--rebuild-core\trebuilds yate, yatebts, srsGUI, srsRAN 4G and srsRAN Project"
     echo -e "\t--rebuild-bladerf\trebuilds bladerf"
+    echo -e "\t--rebuild-soapy\trebuilds bladerf"
     echo -e "\t--web\t\tredo the web setup for yate (port 8080 webpanel)"
     echo -e "\t--clean\t\tclean all external sources (${RED}WARNING: deletes all currently present sources!${NC})" 
     echo -e "Possible parameter2:" 
@@ -352,7 +378,7 @@ elif [ "${1}" == "--backup" ]; then
 elif [ "${1}" == "--all" ]; then
 
     cd /usr/src
-    download_src
+    #download_src
     build_bladerf
     build_yatelib
     build_yatebts
@@ -394,6 +420,11 @@ elif [ "${1}" == "--rebuild-core" ]; then
 elif [ "${1}" == "--rebuild-bladerf" ]; then
     
     build_bladerf
+
+
+elif [ "${1}" == "--rebuild-soapy" ]; then
+    
+    build_soapy
 
 else
 

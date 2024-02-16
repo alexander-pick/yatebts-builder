@@ -8,8 +8,8 @@ RUN apt-get update && \
     wget nano apache2 libbladerf-dev automake bladerf cmake php libapache2-mod-php iptables \
     git doxygen bash net-tools tcpdump iproute2 telnet libqt5multimediawidgets5 libqt5multimedia5-plugins \
     libboost-system-dev libboost-test-dev libboost-thread-dev libqwt-qt5-dev qtbase5-dev qtmultimedia5-dev \
-    cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev \
-    libboost-program-options-dev libconfig++-dev libsctp-dev gnuradio libpcsclite-dev libdw-dev \
+    cmake make gcc g++ pkg-config libfftw3-dev libmbedtls-dev libsctp-dev libyaml-cpp-dev libgtest-dev libzmq3-dev \
+    libboost-program-options-dev libconfig++-dev libsctp-dev gnuradio libpcsclite-dev libdw-dev pcscd pcsc-tools \
     && \
     echo 'export PS1="[bts]$PS1"' >> ~/.bashrc
 
